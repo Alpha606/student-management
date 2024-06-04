@@ -54,15 +54,15 @@ exports.getAllStudents = async (req, res) => {
   }
 };
 
-// Get a specific student
-exports.getStudentById = async (req, res) => {
+// Get details of a specific student 
+exports.getStudentDetails = async (req, res) => {
   try {
     const student = await Student.findById(req.params.id);
     if (!student) return res.status(404).json({ message: "Student not found" });
     res.json(student);
   } catch (err) {
-    console.error("Error fetching student:", err);
-    res.status(500).json({ message: "Error fetching student" });
+    console.error("Error fetching student details:", err);
+    res.status(500).json({ message: "Error fetching student details" });
   }
 };
 

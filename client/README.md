@@ -1,8 +1,22 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Client:
+    /src:
+        /components/
+                layout.jsx [Layout for the application]
+        /pages/
+            Add student.jsx [Add student front end logic]
 
-Currently, two official plugins are available:
+            adminDashboard.jsx [component embeded inside students.jsx which has  
+                                    all the features of search and updation ]
+                                
+            DeactivateStudent.jsx [deactivating student logic]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+            Home.jsx [ Has videoComponent which shows demo of the app on the 
+                                                homepage]
+            /assets
+                [Has video files for the demo]
+
+
+        /App.jsx
+                [Entry point into the app]

@@ -111,23 +111,23 @@ main {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: calc(100% - 20px); /* Make sure input fields take full width minus padding */
-  max-width: 400px; /* Limit the max width for better alignment */
+  width: calc(100% - 20px); 
+  max-width: 400px;
   margin: 0 auto; /* Center align form elements */
-  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  box-sizing: border-box; /*  padding and border are included in the width */
 }
 
 .student-edit-form button {
-  margin: 10px 5px; /* Add some margin around buttons */
-  padding: 10px 15px; /* Add padding for better button size */
-  border: none; /* Remove border for buttons */
+  margin: 10px 5px; 
+  padding: 10px 15px; 
+  border: none; 
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth hover transition */
+  transition: background-color 0.3s ease; 
 }
 
 .student-edit-form button:hover {
-  background-color: #45a049; /* Slight color change on hover */
+  background-color: #45a049;
 }
 
 .student-edit-form .update-button {
@@ -136,10 +136,21 @@ main {
 }
 
 .student-edit-form .cancel-button {
-  background-color: #f44336; /* Red color for cancel button */
+  background-color: #f44336; 
   color: white;
 }
 
 .student-edit-form .cancel-button:hover {
   background-color: #bd1809; /* Darker red on hover */
+}
+
+.search-bar {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-family: inherit; /* Inherit font from body */
+  border-radius: 5px;
+  width: calc(100% - 40px);
+  margin: 0 auto; /* Center align the search bar */
+  box-sizing: border-box; 
 }

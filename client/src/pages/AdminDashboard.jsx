@@ -4,12 +4,14 @@ import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
   const [metrics, setMetrics] = useState({
     totalStudents: 0,
     activeStudents: 0,
     inactiveStudents: 0,
   });
   const [expandedStudentId, setExpandedStudentId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -28,6 +30,7 @@ const AdminDashboard = () => {
       .then((response) => {
         const students = response.data;
         setStudents(students);
+        setFilteredStudents(students);
         setMetrics({
           totalStudents: students.length,
           activeStudents: students.filter((s) => s.active).length,
@@ -37,11 +40,12 @@ const AdminDashboard = () => {
       .catch((error) => console.error(error));
   }, []);
 
+     // Handles the updation process of clicking and expanding the particular students profile
   const handleExpandClick = (student) => {
     if (expandedStudentId === student._id) {
-      setExpandedStudentId(null); // Collapse if already expanded
+      setExpandedStudentId(null); 
     } else {
-      setExpandedStudentId(student._id); // Expand and populate form
+      setExpandedStudentId(student._id);
       setFormData({
         firstName: student.firstName,
         lastName: student.lastName,
@@ -65,12 +69,13 @@ const AdminDashboard = () => {
     setFormData((prevState) => ({ ...prevState, photograph: e.target.files[0] }));
   };
 
- const handleUpdate = (studentId) => {
+     // Handles actual updates of the student profile 
+  const handleUpdate = (studentId) => {
   const data = new FormData();
   Object.keys(formData).forEach((key) => {
     if (key === "photograph" && !formData[key]) {
-      // If photograph field is empty, include the existing photograph data
-      data.append(key, students.find(student => student._id === studentId).photograph);
+     
+      data.append(key, students.find((student) => student._id === studentId).photograph);
     } else {
       data.append(key, formData[key]);
     }
@@ -84,10 +89,37 @@ const AdminDashboard = () => {
           student._id === studentId ? response.data : student
         )
       );
-      setExpandedStudentId(null); // Collapse the form after update
+
+      setFilteredStudents((prevFilteredStudents) =>
+        prevFilteredStudents.map((student) =>
+          student._id === studentId ? response.data : student
+        )
+      );
+
+      setExpandedStudentId(null); 
     })
     .catch((error) => console.error(error));
 };
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query === "") {
+      setFilteredStudents(students);
+    } else {
+      const lowercasedQuery = query.toLowerCase();
+      setFilteredStudents(students.filter((student) => {
+        return (
+          student.firstName.toLowerCase().includes(lowercasedQuery) ||
+          student.lastName.toLowerCase().includes(lowercasedQuery) ||
+          student.grade.toLowerCase().includes(lowercasedQuery) ||
+          student.email.toLowerCase().includes(lowercasedQuery) ||
+          student.phone.toLowerCase().includes(lowercasedQuery) ||
+          student.address.toLowerCase().includes(lowercasedQuery)
+        );
+      }));
+    }
+  };
 
   return (
     <div className="dashboard">
@@ -101,6 +133,14 @@ const AdminDashboard = () => {
           <div className="metric-item">Inactive Students: {metrics.inactiveStudents}</div>
         </div>
         <h2>Student List</h2>
+        {/* searchbar  */}
+        <input
+          type="text"
+          placeholder="Search students..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-bar"
+        />
         <div className="student-list">
           <div className="student-item student-header">
             <div>Photo</div>
@@ -113,11 +153,11 @@ const AdminDashboard = () => {
             <div>Phone</div>
             <div>Address</div>
           </div>
-          {students.map((student) => (
+          {filteredStudents.map((student) => (
             <div key={student._id} className="student-item" onClick={() => handleExpandClick(student)}>
               <div>
                 <img
-                  src={`http://localhost:6969${student.photograph}`} // Ensure correct URL
+                  src={`http://localhost:6969${student.photograph}`} 
                   alt={`${student.firstName} ${student.lastName}`}
                   className="student-photo"
                 />
@@ -146,7 +186,6 @@ const AdminDashboard = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     onClick={(e) => e.stopPropagation()}
-
                     placeholder="Last Name"
                   />
                   <input
@@ -162,7 +201,6 @@ const AdminDashboard = () => {
                     name="dateOfBirth"
                     value={formData.dateOfBirth}
                     onClick={(e) => e.stopPropagation()}
-
                     onChange={handleChange}
                   />
                   <input
@@ -171,7 +209,6 @@ const AdminDashboard = () => {
                     value={formData.gender}
                     onChange={handleChange}
                     onClick={(e) => e.stopPropagation()}
-
                     placeholder="Gender"
                   />
                   <input
@@ -180,7 +217,6 @@ const AdminDashboard = () => {
                     value={formData.email}
                     onChange={handleChange}
                     onClick={(e) => e.stopPropagation()}
-
                     placeholder="Email"
                   />
                   <input
@@ -189,7 +225,6 @@ const AdminDashboard = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     onClick={(e) => e.stopPropagation()}
-
                     placeholder="Phone"
                   />
                   <input
@@ -198,11 +233,9 @@ const AdminDashboard = () => {
                     value={formData.address}
                     onChange={handleChange}
                     onClick={(e) => e.stopPropagation()}
-
                     placeholder="Address"
                   />
-                  <input type="file" name="photograph" onChange={handleFileChange} onClick={(e) => e.stopPropagation()}
- />
+                  <input type="file" name="photograph" onChange={handleFileChange} onClick={(e) => e.stopPropagation()} />
                   <div>
                     <button className="update-button" onClick={() => handleUpdate(student._id)}>Update Student</button>
                     <button className="cancel-button" onClick={() => setExpandedStudentId(null)}>Cancel</button>

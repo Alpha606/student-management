@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  // Check if the current location is the home page
+ 
   const isHomePage = location.pathname === "/";
 
   return (

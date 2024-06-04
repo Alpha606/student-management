@@ -1,14 +1,18 @@
 import React from "react";
 import AdminDashboard from "./AdminDashboard";
-
+import VideoComponent from "./videoComponent";
 const Home = () => (
  
  <div>
     <h1>Welcome to the Student Management Tool</h1>
-    <p>Add description of the app and navigation over here</p>
+    <p>Below is the demo case of the application</p>
+
+    <VideoComponent/>
+   
   </div>
+
   
-  
+
   
 );
 
