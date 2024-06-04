@@ -1,0 +1,124 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard {
+  text-align: center;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+nav a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+}
+
+.metrics {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.metric-item {
+  background: #fff;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+.actions {
+  margin-bottom: 20px;
+}
+
+.deactivate-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.deactivate-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.success-message {
+  color: green;
+  margin-bottom: 20px;
+}
+
+.student-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.student-item {
+  background: #fff;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 50px 80px repeat(7, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.student-header {
+  font-weight: bold;
+  background-color: #333;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 60px 80px repeat(7, 1fr);
+  gap: 10px;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.student-item div {
+  padding: 5px;
+  text-align: center;
+}
+
+.student-photo {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0; /* Changed to square */
+}
+
+.deactivated-students {
+  margin-top: 20px;
+  text-align: left;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,145 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard {
+  text-align: center;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+
+nav a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+}
+
+.metrics {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.metric-item {
+  background: #fff;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+.student-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.student-item {
+  background: #fff;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 80px repeat(8, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.student-header {
+  font-weight: bold;
+  background-color: #333;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 80px repeat(8, 1fr);
+  gap: 10px;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.student-item div {
+  padding: 5px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.student-photo {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.student-edit-form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-top: 10px;
+  grid-column: 1 / -1; /* Make form span the entire width of the parent container */
+}
+
+.student-edit-form input[type="text"],
+.student-edit-form input[type="email"],
+.student-edit-form input[type="date"],
+.student-edit-form input[type="file"] {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 20px); /* Make sure input fields take full width minus padding */
+  max-width: 400px; /* Limit the max width for better alignment */
+  margin: 0 auto; /* Center align form elements */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.student-edit-form button {
+  margin: 10px 5px; /* Add some margin around buttons */
+  padding: 10px 15px; /* Add padding for better button size */
+  border: none; /* Remove border for buttons */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.student-edit-form button:hover {
+  background-color: #45a049; /* Slight color change on hover */
+}
+
+.student-edit-form .update-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.student-edit-form .cancel-button {
+  background-color: #f44336; /* Red color for cancel button */
+  color: white;
+}
+
+.student-edit-form .cancel-button:hover {
+  background-color: #bd1809; /* Darker red on hover */
+}
