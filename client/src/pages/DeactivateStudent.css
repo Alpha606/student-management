@@ -15,37 +15,26 @@ header {
   padding: 10px 0;
 }
 
-nav a {
-  color: #fff;
-  margin: 0 15px;
-  text-decoration: none;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
 main {
   padding: 20px;
 }
 
-.metrics {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.metric-item {
-  background: #fff;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 200px;
-}
-
 .actions {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column; /* Changed to column for stacking */
+  align-items: center; /* Center align items */
+  gap: 10px; /* Space between search bar and button */
+}
+
+.search-bar {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-family: inherit; /* Inherit font from body */
+  border-radius: 5px;
+  width: 300px;
+  box-sizing: border-box; 
 }
 
 .deactivate-button {

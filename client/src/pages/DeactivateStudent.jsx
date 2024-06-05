@@ -1,5 +1,3 @@
-// DeactivateStudent.jsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./DeactivateStudent.css";
@@ -8,12 +6,8 @@ const DeactivateStudent = () => {
   const [students, setStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [deactivatedStudents, setDeactivatedStudents] = useState([]);
-  const [metrics, setMetrics] = useState({
-    totalStudents: 0,
-    activeStudents: 0,
-    inactiveStudents: 0,
-  });
   const [successMessage, setSuccessMessage] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     axios
@@ -21,11 +15,6 @@ const DeactivateStudent = () => {
       .then((response) => {
         const students = response.data;
         setStudents(students);
-        setMetrics({
-          totalStudents: students.length,
-          activeStudents: students.filter((s) => s.active).length,
-          inactiveStudents: students.filter((s) => !s.active).length,
-        });
       })
       .catch((error) => console.error(error));
   }, []);
@@ -57,15 +46,32 @@ const DeactivateStudent = () => {
     setSelectedStudents([]);
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredStudents = students.filter((student) =>
+    student.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    student.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    student.grade.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    student.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    student.phone.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="dashboard">
       <header>
         <h1>Deactivate Student</h1>
       </header>
       <main>
-        
-        
         <div className="actions">
+          <input
+            type="text"
+            placeholder="Search students..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="search-bar"
+          />
           <button className="deactivate-button" onClick={handleDeactivateSelected} disabled={!selectedStudents.length}>
             Deactivate Selected
           </button>
@@ -83,7 +89,7 @@ const DeactivateStudent = () => {
             <div>Email</div>
             <div>Phone</div>
           </div>
-          {students.map((student) => (
+          {filteredStudents.map((student) =>
             !student.active ? null : (
               <div key={student._id} className={`student-item ${student.active ? '' : 'inactive-student'}`}>
                 <div>
@@ -110,24 +116,24 @@ const DeactivateStudent = () => {
                 <div>{student.phone}</div>
               </div>
             )
-          ))}
+          )}
         </div>
-       <h2>Deactivated Students</h2>
-<div className="deactivated-students">
-  {deactivatedStudents.length > 0 ? (
-    deactivatedStudents.map((id) => {
-      const deactivatedStudent = students.find((student) => student._id === id);
-      if (!deactivatedStudent) return null; // If student not found, skip
-      return (
-        <div key={id}>
-          Deactivated {deactivatedStudent.firstName} {deactivatedStudent.lastName} from  Grade {deactivatedStudent.grade}
+        <h2>Deactivated Students</h2>
+        <div className="deactivated-students">
+          {deactivatedStudents.length > 0 ? (
+            deactivatedStudents.map((id) => {
+              const deactivatedStudent = students.find((student) => student._id === id);
+              if (!deactivatedStudent) return null; // If student not found, skip
+              return (
+                <div key={id}>
+                  Deactivated {deactivatedStudent.firstName} {deactivatedStudent.lastName} from Grade {deactivatedStudent.grade}
+                </div>
+              );
+            })
+          ) : (
+            <div>No students have been deactivated yet.</div>
+          )}
         </div>
-      );
-    })
-  ) : (
-    <div>No students have been deactivated yet.</div>
-  )}
-</div>
       </main>
     </div>
   );
