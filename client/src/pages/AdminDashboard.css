@@ -58,10 +58,15 @@ main {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: grid;
-  grid-template-columns: 80px repeat(8, 1fr);
+  grid-template-columns: 80px repeat(8, 1fr) 100px;
   gap: 10px;
   width: 100%;
   max-width: 1200px;
+  cursor: pointer;
+}
+
+.student-item:hover {
+  background-color: #f9f9f9;
 }
 
 .student-header {
@@ -69,7 +74,7 @@ main {
   background-color: #333;
   color: #fff;
   display: grid;
-  grid-template-columns: 80px repeat(8, 1fr);
+  grid-template-columns: 80px repeat(8, 1fr) 100px;
   gap: 10px;
   padding: 20px;
   margin: 10px 0;
@@ -114,7 +119,7 @@ main {
   width: calc(100% - 20px); 
   max-width: 400px;
   margin: 0 auto; /* Center align form elements */
-  box-sizing: border-box; /*  padding and border are included in the width */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
 .student-edit-form button {

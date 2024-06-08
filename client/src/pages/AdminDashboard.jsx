@@ -40,17 +40,16 @@ const AdminDashboard = () => {
       .catch((error) => console.error(error));
   }, []);
 
-     // Handles the updation process of clicking and expanding the particular students profile
   const handleExpandClick = (student) => {
     if (expandedStudentId === student._id) {
-      setExpandedStudentId(null); 
+      setExpandedStudentId(null);
     } else {
       setExpandedStudentId(student._id);
       setFormData({
         firstName: student.firstName,
         lastName: student.lastName,
         grade: student.grade,
-        dateOfBirth: new Date(student.dateOfBirth).toISOString().split("T")[0], // Format for input[type="date"]
+        dateOfBirth: new Date(student.dateOfBirth).toISOString().split("T")[0],
         gender: student.gender,
         email: student.email,
         phone: student.phone,
@@ -69,37 +68,36 @@ const AdminDashboard = () => {
     setFormData((prevState) => ({ ...prevState, photograph: e.target.files[0] }));
   };
 
-     // Handles actual updates of the student profile 
   const handleUpdate = (studentId) => {
-  const data = new FormData();
-  Object.keys(formData).forEach((key) => {
-    if (key === "photograph" && !formData[key]) {
-     
-      data.append(key, students.find((student) => student._id === studentId).photograph);
-    } else {
-      data.append(key, formData[key]);
-    }
-  });
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (key === "photograph" && !formData[key]) {
+        data.append(key, students.find((student) => student._id === studentId).photograph);
+      } else {
+        data.append(key, formData[key]);
+      }
+    });
 
-  axios
-    .put(`http://localhost:6969/api/students/${studentId}`, data)
-    .then((response) => {
-      setStudents((prevStudents) =>
-        prevStudents.map((student) =>
-          student._id === studentId ? response.data : student
-        )
-      );
+    axios
+      .put(`http://localhost:6969/api/students/${studentId}`, data)
+      .then((response) => {
+        setStudents((prevStudents) =>
+          prevStudents.map((student) =>
+            student._id === studentId ? response.data : student
+          )
+        );
 
-      setFilteredStudents((prevFilteredStudents) =>
-        prevFilteredStudents.map((student) =>
-          student._id === studentId ? response.data : student
-        )
-      );
+        setFilteredStudents((prevFilteredStudents) =>
+          prevFilteredStudents.map((student) =>
+            student._id === studentId ? response.data : student
+          )
+        );
 
-      setExpandedStudentId(null); 
-    })
-    .catch((error) => console.error(error));
-};
+        setExpandedStudentId(null);
+      })
+      .catch((error) => console.error(error));
+  };
+
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -108,16 +106,18 @@ const AdminDashboard = () => {
       setFilteredStudents(students);
     } else {
       const lowercasedQuery = query.toLowerCase();
-      setFilteredStudents(students.filter((student) => {
-        return (
-          student.firstName.toLowerCase().includes(lowercasedQuery) ||
-          student.lastName.toLowerCase().includes(lowercasedQuery) ||
-          student.grade.toLowerCase().includes(lowercasedQuery) ||
-          student.email.toLowerCase().includes(lowercasedQuery) ||
-          student.phone.toLowerCase().includes(lowercasedQuery) ||
-          student.address.toLowerCase().includes(lowercasedQuery)
-        );
-      }));
+      setFilteredStudents(
+        students.filter((student) => {
+          return (
+            student.firstName.toLowerCase().includes(lowercasedQuery) ||
+            student.lastName.toLowerCase().includes(lowercasedQuery) ||
+            student.grade.toLowerCase().includes(lowercasedQuery) ||
+            student.email.toLowerCase().includes(lowercasedQuery) ||
+            student.phone.toLowerCase().includes(lowercasedQuery) ||
+            student.address.toLowerCase().includes(lowercasedQuery)
+          );
+        })
+      );
     }
   };
 
@@ -133,7 +133,6 @@ const AdminDashboard = () => {
           <div className="metric-item">Inactive Students: {metrics.inactiveStudents}</div>
         </div>
         <h2>Student List</h2>
-        {/* searchbar  */}
         <input
           type="text"
           placeholder="Search students..."
@@ -152,12 +151,13 @@ const AdminDashboard = () => {
             <div>Email</div>
             <div>Phone</div>
             <div>Address</div>
+            <div>Actions</div>
           </div>
           {filteredStudents.map((student) => (
-            <div key={student._id} className="student-item" onClick={() => handleExpandClick(student)}>
+            <div key={student._id} className="student-item">
               <div>
                 <img
-                  src={`http://localhost:6969${student.photograph}`} 
+                  src={`http://localhost:6969${student.photograph}`}
                   alt={`${student.firstName} ${student.lastName}`}
                   className="student-photo"
                 />
@@ -170,6 +170,17 @@ const AdminDashboard = () => {
               <div>{student.email}</div>
               <div>{student.phone}</div>
               <div>{student.address}</div>
+              <div>
+                <button
+                  className="edit-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleExpandClick(student);
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
               {expandedStudentId === student._id && (
                 <div className="student-edit-form">
                   <input
@@ -177,7 +188,6 @@ const AdminDashboard = () => {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="First Name"
                   />
                   <input
@@ -185,7 +195,6 @@ const AdminDashboard = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="Last Name"
                   />
                   <input
@@ -193,14 +202,12 @@ const AdminDashboard = () => {
                     name="grade"
                     value={formData.grade}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="Grade"
                   />
                   <input
                     type="date"
                     name="dateOfBirth"
                     value={formData.dateOfBirth}
-                    onClick={(e) => e.stopPropagation()}
                     onChange={handleChange}
                   />
                   <input
@@ -208,7 +215,6 @@ const AdminDashboard = () => {
                     name="gender"
                     value={formData.gender}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="Gender"
                   />
                   <input
@@ -216,7 +222,6 @@ const AdminDashboard = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="Email"
                   />
                   <input
@@ -224,7 +229,6 @@ const AdminDashboard = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="Phone"
                   />
                   <input
@@ -232,13 +236,28 @@ const AdminDashboard = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    onClick={(e) => e.stopPropagation()}
                     placeholder="Address"
                   />
-                  <input type="file" name="photograph" onChange={handleFileChange} onClick={(e) => e.stopPropagation()} />
+                  <input type="file" name="photograph" onChange={handleFileChange} />
                   <div>
-                    <button className="update-button" onClick={() => handleUpdate(student._id)}>Update Student</button>
-                    <button className="cancel-button" onClick={() => setExpandedStudentId(null)}>Cancel</button>
+                    <button
+                      className="update-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdate(student._id);
+                      }}
+                    >
+                      Update Student
+                    </button>
+                    <button
+                      className="cancel-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpandedStudentId(null);
+                      }}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               )}
