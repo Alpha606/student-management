@@ -151,7 +151,7 @@ const AdminDashboard = () => {
             <div>Email</div>
             <div>Phone</div>
             <div>Address</div>
-            <div>Actions</div>
+            {/* <div>Actions</div> */}
           </div>
           {filteredStudents.map((student) => (
             <div key={student._id} className="student-item">
